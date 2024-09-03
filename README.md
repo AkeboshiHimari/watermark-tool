@@ -1,6 +1,6 @@
 
 
-![title](./title.png)
+![title](./docs/title.png)
 
 # watermark-tool
 
@@ -15,7 +15,7 @@
 
 ### 1. watermark-tool 다운로드
 
-1. 압축 파일을 다운로드합니다.
+1. [Releases](https://github.com/AkeboshiHimari/watermark-tool/releases/)에서 최신 버전의 파일을 다운로드합니다.
 2. 다운로드한 파일의 압축을 풉니다.
 
 ### 2. Python 설치
@@ -97,7 +97,7 @@
 
 사용중 문의사항이 있다면 Issue를 남기거나 또는 DM 보내주세요.
 
-- Issue 등록하기
+- [Issue 등록하기](https://github.com/AkeboshiHimari/watermark-tool/issues)
 - [@Lag_L2p로 DM 보내기](https://x.com/Lag_L2p)
 
 
@@ -113,5 +113,26 @@
 
 ## 기여하기
 
-여러분의 기여를 환영합니다. 자세한 내용은 기여 가이드라인을 확인해 주세요.
+여러분의 기여를 환영합니다. 편하게 기여해주세요.
 
+커밋, PR 메시지는 다음과 같이 작성해주세요.
+
+```
+<type>: <description>
+```
+
+**Type은 다음 중 하나여야 합니다.**
+
+코드가 변경된 경우
+
+- `feat`: 새로운 기능 추가
+- `update`: 기존 기능 개선
+- `fix`: 오류 수정
+
+코드가 변경되지 않은 경우
+
+- `docs`: 문서 변경
+
+기타
+
+- `chore`: 그 외
