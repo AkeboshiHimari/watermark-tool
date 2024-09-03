@@ -1,6 +1,6 @@
 
 
-![title](./title.png)
+![title](./docs/title.png)
 
 # watermark-tool
 
