@@ -1,0 +1,6 @@
+ultralytics
+pathlib
+rich
+Pillow
+numpy
+vibrant-python
