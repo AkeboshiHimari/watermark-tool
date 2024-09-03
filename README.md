@@ -15,7 +15,7 @@
 
 ### 1. watermark-tool 다운로드
 
-1. 압축 파일을 다운로드합니다.
+1. [Releases](https://github.com/AkeboshiHimari/watermark-tool/releases/)에서 최신 버전의 파일을 다운로드합니다.
 2. 다운로드한 파일의 압축을 풉니다.
 
 ### 2. Python 설치
@@ -97,7 +97,7 @@
 
 사용중 문의사항이 있다면 Issue를 남기거나 또는 DM 보내주세요.
 
-- Issue 등록하기
+- [Issue 등록하기](https://github.com/AkeboshiHimari/watermark-tool/issues)
 - [@Lag_L2p로 DM 보내기](https://x.com/Lag_L2p)
 
 
