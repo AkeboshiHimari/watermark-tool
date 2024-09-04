@@ -160,7 +160,8 @@ def process_split(split: Image.Image, model: YOLO, watermark_text: str, font_pat
         Tuple[Image.Image, int]: 처리된 이미지 분할과 감지된 얼굴 수
     """
     
-    results = model(np.array(split), verbose=False)
+    rgb_split = split.convert('RGB') # RGB로 변환
+    results = model(np.array(rgb_split), verbose=False)
     num_faces = len(results[0].boxes)
 
     draw = ImageDraw.Draw(split)
