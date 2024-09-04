@@ -135,7 +135,7 @@ def draw_watermark(draw: ImageDraw.ImageDraw, split: Image.Image, face: List[flo
     text_y = watermark_y + (watermark_height - text_height) // 2
 
     # 색상 추출
-    color_area = split.crop((x1, y1+face_height, x2, y2+face_height))
+    color_area = split.crop((x1, y1 + y_offset, x2, y2 + y_offset))
     bg_color, text_color = extract_colors(color_area)
 
     # 워터마크 삽입
