@@ -12,11 +12,10 @@ from typing import List, Dict, Tuple
 
 # Constants
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
-WATERMARK_BOX_PADDING = 50 # 워터마크 가로 길이 = 감지된 얼굴 영역의 가로 길이 + 입력값(px)
-WATERMARK_BOX_HEIGHT_RATIO = 0.3 # 워터마크 세로 길이 = 감지된 얼굴 영역의 세로 길이 * 입력값
+WATERMARK_BOX_WIDTH_RATIO = 2 # 워터마크 가로 길이 = 얼굴 영역의 가로 길이 * 입력값
+WATERMARK_BOX_HEIGHT_RATIO = 0.3 # 워터마크 세로 길이 = 얼굴 영역의 세로 길이 * 입력값
 WATERMARK_TEXT_SIZE_RATIO = 1.0 # 워터마크 텍스트 크기 = 워터마크 세로 길이 * 입력값
-WATERMARK_VERTICAL_OFFSET = 60 # 워터마크 세로 위치 = 감지된 얼굴 위치 아랫부분 + 입력값(px)
-WATERMARK_HORIZONTAL_OFFSET = 20 # 워터마크 가로 위치
+WATERMARK_VERTICAL_OFFSET_RATIO = 0.5 # 워터마크 세로 위치 = 얼굴 위치 아랫부분 + 얼굴 영역의 세로 길이 * 입력값
 DEFAULT_BG_COLOR = (128, 128, 128, 192) # 배경 색상 감지 실패시 기본 적용 색상
 DEFAULT_TEXT_COLOR = (255, 255, 255) # 텍스트 색상 감지 실패시 기본 적용 색상
 
@@ -114,12 +113,13 @@ def draw_watermark(draw: ImageDraw.ImageDraw, split: Image.Image, face: List[flo
     face_height = y2 - y1
     
     # 워터마크 영역
-    watermark_width = face_width + WATERMARK_BOX_PADDING
+    watermark_width = int(face_width * WATERMARK_BOX_WIDTH_RATIO)
     watermark_height = int(face_height * WATERMARK_BOX_HEIGHT_RATIO)
 
     # 워터마크 위치
-    watermark_x = x1 - WATERMARK_HORIZONTAL_OFFSET
-    watermark_y = y2 + WATERMARK_VERTICAL_OFFSET
+    y_offset = int(face_height * WATERMARK_VERTICAL_OFFSET_RATIO)
+    watermark_x = (x1+x2-watermark_width)//2
+    watermark_y = y2 + y_offset
     
     # 워터마크 텍스트
     font_size = int(watermark_height * WATERMARK_TEXT_SIZE_RATIO)
@@ -135,7 +135,7 @@ def draw_watermark(draw: ImageDraw.ImageDraw, split: Image.Image, face: List[flo
     text_y = watermark_y + (watermark_height - text_height) // 2
 
     # 색상 추출
-    color_area = split.crop((x1, y1+face_height, x2, y2+face_height))
+    color_area = split.crop((x1, y1 + y_offset, x2, y2 + y_offset))
     bg_color, text_color = extract_colors(color_area)
 
     # 워터마크 삽입
@@ -160,7 +160,8 @@ def process_split(split: Image.Image, model: YOLO, watermark_text: str, font_pat
         Tuple[Image.Image, int]: 처리된 이미지 분할과 감지된 얼굴 수
     """
     
-    results = model(np.array(split), verbose=False)
+    rgb_split = split.convert('RGB') # RGB로 변환
+    results = model(np.array(rgb_split), verbose=False)
     num_faces = len(results[0].boxes)
 
     draw = ImageDraw.Draw(split)
