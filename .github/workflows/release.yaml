@@ -9,6 +9,7 @@ jobs:
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
+    environment: Release
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
