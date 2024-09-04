@@ -15,7 +15,6 @@ IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
 WATERMARK_BOX_WIDTH_RATIO = 2 # 워터마크 가로 길이 = 얼굴 영역의 가로 길이 * 입력값
 WATERMARK_BOX_HEIGHT_RATIO = 0.3 # 워터마크 세로 길이 = 얼굴 영역의 세로 길이 * 입력값
 WATERMARK_TEXT_SIZE_RATIO = 1.0 # 워터마크 텍스트 크기 = 워터마크 세로 길이 * 입력값
-WATERMARK_HORIZONTAL_OFFSET = 20 # 워터마크 가로 위치
 WATERMARK_VERTICAL_OFFSET_RATIO = 0.5 # 워터마크 세로 위치 = 얼굴 위치 아랫부분 + 얼굴 영역의 세로 길이 * 입력값
 DEFAULT_BG_COLOR = (128, 128, 128, 192) # 배경 색상 감지 실패시 기본 적용 색상
 DEFAULT_TEXT_COLOR = (255, 255, 255) # 텍스트 색상 감지 실패시 기본 적용 색상
@@ -118,9 +117,9 @@ def draw_watermark(draw: ImageDraw.ImageDraw, split: Image.Image, face: List[flo
     watermark_height = int(face_height * WATERMARK_BOX_HEIGHT_RATIO)
 
     # 워터마크 위치
-    watermark_x = x1 - WATERMARK_HORIZONTAL_OFFSET
-    watermark_y = y2 + WATERMARK_VERTICAL_OFFSET
     y_offset = int(face_height * WATERMARK_VERTICAL_OFFSET_RATIO)
+    watermark_x = (x1+x2-watermark_width)//2
+    watermark_y = y2 + y_offset
     
     # 워터마크 텍스트
     font_size = int(watermark_height * WATERMARK_TEXT_SIZE_RATIO)
