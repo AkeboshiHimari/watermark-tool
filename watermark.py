@@ -13,10 +13,8 @@ import argparse
 
 # Constants
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
-WATERMARK_BOX_WIDTH_RATIO = 2 # 워터마크 가로 길이 = 얼굴 영역의 가로 길이 * 입력값
-WATERMARK_BOX_HEIGHT_RATIO = 0.3 # 워터마크 세로 길이 = 얼굴 영역의 세로 길이 * 입력값
-WATERMARK_TEXT_SIZE_RATIO = 1.0 # 워터마크 텍스트 크기 = 워터마크 세로 길이 * 입력값
-WATERMARK_VERTICAL_OFFSET_RATIO = 0.5 # 워터마크 세로 위치 = 얼굴 위치 아랫부분 + 얼굴 영역의 세로 길이 * 입력값
+WATERMARK_BOX_HEIGHT_MULTIPLIER = 0.3 # 워터마크 세로 길이 = 얼굴 영역의 세로 길이 * 입력값
+WATERMARK_TEXT_SIZE_MULTIPLIER = 1.0 # 워터마크 텍스트 크기 = 워터마크 세로 길이 * 입력값
 DEFAULT_BG_COLOR = (128, 128, 128, 192) # 배경 색상 감지 실패시 기본 적용 색상
 DEFAULT_TEXT_COLOR = (255, 255, 255) # 텍스트 색상 감지 실패시 기본 적용 색상
 
@@ -412,11 +410,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="워터마크 삽입 도구")
     parser.add_argument("-t", "--text", type=str, default="SAMPLE", help="워터마크 텍스트")
     parser.add_argument("-l", "--logo", type=str, help="워터마크 로고 이미지 파일 경로")
+    parser.add_argument("-w", "--width", type=float, default=2.0, help="워터마크 너비 비율 (얼굴 너비 대비), 기본값: 2.0")
+    parser.add_argument("-y", "--y_offset", type=float, default=0.5, help="워터마크 세로 위치 오프셋 (얼굴 높이 대비), 기본값: 0.5")
+    args = parser.parse_args()
+
     input_folder = "input"
     output_folder = "output"
     model_path = "model.pt"
-    watermark_text = "SAMPLE"
     watermark_text = args.text if not args.logo else None
     watermark_logo = args.logo
     font_path = "font.otf"
+    WATERMARK_BOX_WIDTH_MULTIPLIER = args.width
+    WATERMARK_VERTICAL_OFFSET_MULTIPLIER = args.y_offset
     process_images(input_folder, output_folder, model_path, watermark_text, watermark_logo, font_path)
