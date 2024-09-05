@@ -274,9 +274,12 @@ def display_results(results: List[Dict[str, any]]) -> None:
     console.print(table)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="워터마크 삽입 도구")
+    parser.add_argument("-t", "--text", type=str, default="SAMPLE", help="워터마크 텍스트")
     input_folder = "input"
     output_folder = "output"
     model_path = "model.pt"
     watermark_text = "SAMPLE"
+    watermark_text = args.text if not args.logo else None
     font_path = "font.otf"
     process_images(input_folder, output_folder, model_path, watermark_text, font_path)
